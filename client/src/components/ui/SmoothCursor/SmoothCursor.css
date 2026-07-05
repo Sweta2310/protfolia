@@ -1,0 +1,97 @@
+.smooth-cursor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.smooth-cursor--visible {
+  opacity: 1;
+}
+
+.smooth-cursor__dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c084fc;
+  box-shadow: 0 0 8px 2px rgba(192, 132, 252, 0.6);
+  will-change: transform;
+}
+
+.smooth-cursor__ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(168, 85, 247, 0.55);
+  background: radial-gradient(
+    circle,
+    rgba(168, 85, 247, 0.08) 0%,
+    rgba(45, 212, 191, 0.04) 60%,
+    transparent 100%
+  );
+  will-change: transform, width, height, border-color;
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.smooth-cursor__ring--hover {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(45, 212, 191, 0.75);
+  background: radial-gradient(
+    circle,
+    rgba(45, 212, 191, 0.12) 0%,
+    rgba(168, 85, 247, 0.06) 60%,
+    transparent 100%
+  );
+}
+
+.smooth-cursor__dot--hidden {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.smooth-cursor__ring--label {
+  width: 92px;
+  height: 92px;
+  border-color: rgba(168, 85, 247, 0.9);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.95), rgba(45, 212, 191, 0.85));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 24px 6px rgba(168, 85, 247, 0.35);
+}
+
+.smooth-cursor__label {
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #050505;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Hide the native cursor on interactive elements, since the custom cursor replaces it */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a,
+  button,
+  [role="button"],
+  input,
+  textarea,
+  select {
+    cursor: none;
+  }
+}
