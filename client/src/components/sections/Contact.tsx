@@ -49,13 +49,29 @@ export default function Contact() {
     if (!formData.name || !formData.email || !formData.message) return;
 
     setIsSending(true);
-    // Simulate submission flow
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSending(false);
-    setIsSent(true);
-    setFormData({ name: '', email: '', message: '' });
+    
+    try {
+      const response = await fetch('http://localhost:5001/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    setTimeout(() => setIsSent(false), 5000);
+      if (response.ok) {
+        setIsSent(true);
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        alert('Failed to send message. Please try again later.');
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      alert('Failed to send message. Please check if the server is running.');
+    } finally {
+      setIsSending(false);
+      setTimeout(() => setIsSent(false), 5000);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
